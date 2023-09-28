@@ -1,0 +1,137 @@
+/* BASE.HTML */
+body {
+  background-image: url('/static/image/background.jpg');
+}
+.container {
+  margin: 4.5rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pages{
+  background-color: #A9A9A9;
+  padding: 20px;
+  width: auto;
+  margin: 0 auto;
+  text-align: center;
+  border: 2px solid rgb(22, 0, 224);
+  border-radius: 2%;
+}
+
+/* INDEX.HTML */
+h1{
+  font-size: 50px;
+  text-decoration: underline;
+  margin: 20px;
+}
+.botão {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  
+}
+.botão a {
+margin: 5px;
+}
+.botão button{
+  font-size: 22px;
+  border: 2px solid rgb(22, 0, 224);
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 3px;
+  width: 200px; 
+  transition: background-color 0.3s ease;
+}
+.botão button:hover {
+  background-color: rgb(22, 0, 224);
+  color: #fff; 
+}
+.dropdown-container {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  left: 12rem;
+  top: -10px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 17px;
+}
+
+.dropdown-content a:hover {
+  background-color: #A9A9A9;
+}
+
+/* SAIDA.HTML E ENTREGA.HTML */
+.container_saida {
+  display: table;
+  width: 100%;
+}
+
+.bloco {
+  display: table-cell;
+  vertical-align: middle;
+  width: 30%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.bloco label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/*.bloco button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}*/
+
+.bloco select,
+.bloco input[type="text"] 
+.bloco input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  
+}
+
+.bloco select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 24 24' width='18' height='18'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-position: right 5px center;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  padding-right: 25px;
+}
+

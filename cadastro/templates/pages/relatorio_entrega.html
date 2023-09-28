@@ -1,0 +1,88 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/relatorio.css' %}">
+
+<div class="cabeçalho">
+    <img src="{% static 'image/logo.png' %}" alt="" class="logo">
+    <h1>INTERCONTINENTAL Com. De Alimentos Ltda.</h1>
+    <h3>Rodovia Presidente Dutra, 1957 - São João de Meriti - RJ <br>
+        CNPJ.:64.308.299/0001-29 <br>
+        Tel.: 2107-8029 / 2107-8326 / 2107-8049    
+    <h3>
+</div>
+
+<form method="GET" action="{% url 'relatorio_entrega' %}" id="formulario">
+    <label for="cupom">Cupom:</label>
+    <input type="number" name="cupom" id="cupom" autocomplete="off" placeholder="Digite o Cupom">
+    <button type="submit">Filtrar</button>
+    <button onclick="imprimirTabela()">Imprimir</button>
+    <a href="{% url 'entrega' %}">Voltar</a>
+</form>
+{% if autorizacao %}
+    <p>{{ autorizacao }}</p>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Número de Série</th>
+            <th>Quantidade</th>
+            <th>Data de Saída</th>
+            <th>Observações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entrega in entregas %}
+            <tr>
+                <td>{{ entrega.tipo }}</td>
+                <td>{{ entrega.marca }}</td>
+                <td>{{ entrega.modelo }}</td>
+                <td>{{ entrega.numero_serie }}</td>
+                <td>{{ entrega.quantidade }}</td>
+                <td>{{ entrega.data_entrega }}</td>
+                <td>{{ entrega.obs }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+<div>
+    <p>
+        São João de Meriti _____ de __________ de ______
+    </p>
+</div>
+<div>
+    <p class="inline-paragraphs">________________________ <br>
+    Representante. </p>
+    <p class="inline-paragraphs"> ________________________  <br> Autorização - Inter</p>
+</div>
+
+<script>
+    function imprimirTabela() {
+        window.print();
+    }
+
+    // Função para mostrar um alerta se o número for inválido
+    {% if autorizacao == None %}
+    var cupomInvalido = "{{ request.GET.cupom }}";
+    if (cupomInvalido) {
+        alert("Número inexistente.");
+        // Cancelar o envio do formulário
+        event.preventDefault();
+    }
+    {% endif %}
+
+    // Redirecionar para a página inicial após a impressão
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (!mql.matches) {
+                // Impressão concluída, redirecionar para a página inicial
+                window.location.href = "{% url 'index' %}";
+            }
+        });
+    }
+</script>
+

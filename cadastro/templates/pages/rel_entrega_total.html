@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relatório de Entregas</title>
+</head>
+<body>
+    <h1>Relatório de Entregas</h1>
+    <form method="get" action="">
+        <label for="data_inicio">Data Início:</label>
+        <input type="date" id="data_inicio" name="data_inicio">
+        <label for="data_termino">Data Término:</label>
+        <input type="date" id="data_termino" name="data_termino">
+        <button type="submit">Filtrar</button>
+        <a href="{% url 'index' %}" >
+            <button type="button" style="cursor: pointer;">Voltar</button>
+        </a>   
+    </form>
+    <br>
+    <table border="1">
+        <tr>
+            <th>Empresa</th>
+            <th>Técnico</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Número de Série</th>
+            <th>Quantidade</th>
+            <th>Data de Entrega</th>
+            <th>Observações</th>
+            <th>Data e Hora Atual</th>
+            <th>IP do Cliente</th>
+            <th>Cupom</th>
+        </tr>
+        {% for entrega in entregas %}
+        <tr>
+            <td>{{ entrega.empresa }}</td>
+            <td>{{ entrega.tecnico }}</td>
+            <td>{{ entrega.tipo }}</td>
+            <td>{{ entrega.marca }}</td>
+            <td>{{ entrega.modelo }}</td>
+            <td>{{ entrega.numero_serie }}</td>
+            <td>{{ entrega.quantidade }}</td>
+            <td>{{ entrega.data_entrega }}</td>
+            <td>{{ entrega.obs }}</td>
+            <td>{{ entrega.data_hora_atual }}</td>
+            <td>{{ entrega.ip_cliente }}</td>
+            <td>{{ entrega.cupom }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+<style>
+    table {
+    
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    th, td {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #A9A9A9;
+        font-size: 15px;
+    }
+</style>
+
+</html>

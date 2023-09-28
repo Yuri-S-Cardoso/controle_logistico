@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relatório de Saída</title>
+</head>
+<body>
+    <h1>Relatório de Saída</h1>
+    <form method="get" action="">
+        <label for="data_inicio">Data Início:</label>
+        <input type="date" id="data_inicio" name="data_inicio">
+        <label for="data_termino">Data Término:</label>
+        <input type="date" id="data_termino" name="data_termino">
+        <button type="submit">Filtrar</button>
+        <a href="{% url 'index' %}" >
+            <button type="button" style="cursor: pointer;">Voltar</button>
+        </a>   
+    </form>
+    <br>
+    <table border="1">
+        <tr>
+            <th>Empresa</th>
+            <th>Técnico</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Número de Série</th>
+            <th>Quantidade</th>
+            <th>Data de Saída</th>
+            <th>Observações</th>
+            <th>Data e Hora Atual</th>
+            <th>IP do Cliente</th>
+            <th>Cupom</th>
+        </tr>
+        {% for saida in saidas %}
+        <tr>
+            <td>{{ saida.empresa }}</td>
+            <td>{{ saida.tecnico }}</td>
+            <td>{{ saida.tipo }}</td>
+            <td>{{ saida.marca }}</td>
+            <td>{{ saida.modelo }}</td>
+            <td>{{ saida.numero_serie }}</td>
+            <td>{{ saida.quantidade }}</td>
+            <td>{{ saida.data_saida }}</td>
+            <td>{{ saida.obs }}</td>
+            <td>{{ saida.data_hora_atual }}</td>
+            <td>{{ saida.ip_cliente }}</td>
+            <td>{{ saida.cupom }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+<style>
+    table {
+    
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    th, td {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #A9A9A9;
+        font-size: 15px;
+    }
+</style>
+
+</html>

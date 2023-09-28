@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div>
+    <h1>Selecione</h1>
+    <br><br>
+
+    <div class='botão'>
+        
+        <a href="{% url 'saida' %}">
+            <button>Saída</button>
+        </a><br>
+        <a href="{% url 'entrega' %}">
+            <button>Entrega</button>
+        </a><br>
+        <div class="dropdown">
+            <button id="relatorioButton">Relatório</button>
+            <div class="dropdown-content">
+                <a href="{% url 'rel_saida_total' %}" style="text-decoration: underline;">Saída</a>
+                <a href="{% url 'rel_entrega_total' %}" style="text-decoration: underline;">Entrega</a>
+
+            </div>
+        </div><br>
+        <div class="dropdown">
+            <button>Cadastro</button>
+            <div class="dropdown-content">
+                <a href="{% url 'empresa' %}" style="text-decoration: underline;">Empresa</a>
+                <a href="{% url 'tecnico' %}" style="text-decoration: underline;">Técnico</a>
+                <a href="{% url 'equipamento' %}" style="text-decoration: underline;">Equipamento</a>
+            </div>
+        </div>
+    </div>
+      
+</div>
+
+<script>
+    function redirecionarParaURL(url) {
+        window.location.href = url;
+    }
+
+    // Manipulador de evento para abrir 'relatorio_saida' com clique do mouse
+    var relatorioButton = document.getElementById("relatorioButton");
+    relatorioButton.addEventListener("click", function(event) {
+        // Verifica se a tecla "Ctrl" (ou "Cmd" em macOS) está pressionada
+        if (event.ctrlKey) {
+            // Evita que o clique do botão cause sua ação padrão
+            event.preventDefault();
+            redirecionarParaURL(URL_SENHA);
+        }
+    });
+
+    // Defina as URLs reais que você deseja usar
+    var URL_SENHA = "{% url 'senha' %}";
+
+    //-------------------------------------------------------------
+</script>
+{% endblock %}

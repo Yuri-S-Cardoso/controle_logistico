@@ -1,0 +1,50 @@
+table {
+    
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 3px;
+    text-align: left;
+}
+
+th {
+    background-color: #A9A9A9;
+    font-size: 15px;
+}
+@media print {
+    #formulario {
+        display: none;
+    }
+}
+.inline-paragraphs {
+    display: inline-block;
+    margin: 75px; 
+    white-space: nowrap;
+    text-align:center;
+}
+.cabeçalho{
+    display: flex;
+    align-items: center;
+}
+.cabeçalho h1{
+    font-size: 25px;
+    text-decoration: underline;
+    margin-bottom: 5px;
+    margin: 0;
+}
+.cabeçalho h3{
+    font-size: 15px;
+    margin: 20px;
+    text-align: left;
+    margin-top: 5px;
+}
+.logo {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+.conteúdo {
+    flex: 1;
+}

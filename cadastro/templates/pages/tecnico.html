@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div>
+    <h1>Técnico</h1>
+
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+
+        <div class= "bloco">
+            <label for="">Nome do Técnico:</label>
+            <input type="text" name="nome_tecnico" placeholder="Digite aqui"  oninput="this.value = this.value.toUpperCase()">
+        </div>
+        <br>
+        <div class="botao">
+            <input class="Salvar" type="submit" value="Salvar" style="cursor: pointer;">
+            <a href="{% url 'index' %}" >
+                <button style="cursor: pointer;">Voltar</button>
+            </a>  
+        </div>  
+    </form>
+</div>
+
+{% endblock %}

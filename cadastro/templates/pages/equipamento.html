@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div>
+    <h1>Cadastro de equipamentos:</h1>
+
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+
+        <div class= "container_saida">
+            <div class="bloco">
+                <label for="">Tipo:</label>
+                <input type="text" name="tipo" placeholder="Digite aqui"  oninput="this.value = this.value.toUpperCase()">
+                <label for="">Marca:</label>
+                <input type="text" name="marca" placeholder="Digite aqui"  oninput="this.value = this.value.toUpperCase()">
+                <label for="">Modelo:</label>
+                <input type="text" name="modelo" placeholder="Digite aqui"  oninput="this.value = this.value.toUpperCase()">
+            </div>  
+        </div>
+        <br>
+        <input class="Salvar" type="submit" value="Salvar" style="cursor: pointer;">
+        <a href="{% url 'index' %}" >
+            <button style="cursor: pointer;">Voltar</button>
+        </a>
+    </form>
+</div>
+
+{% endblock %}

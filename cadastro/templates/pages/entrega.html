@@ -1,0 +1,181 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
+<form method="post" action="{% url 'entrega' %}" onsubmit="return validateForm();" autocomplete="off">
+    {% csrf_token %}
+
+    <div >
+        <h1>Entrega de Equipamentos</h1>
+
+        <div>
+            <label for="cupom">Cupom:</label>
+            <input type="number" name="cupom" id="cupom" placeholder="Digite o Cupom" required>
+            <input type="hidden" id="verificar_cupom_url" value="{% url 'verificar_cupom_entrega' %}">
+        </div> <br>
+
+        <div class= "container_saida">
+            <div class="bloco">
+
+                <label for="empresa">Empresa</label>
+                <input type="text" name="empresa" id="empresa" list="empresas_list" placeholder="Selecione a Empresa" required>
+                <datalist id="empresas_list" required>
+                    {% for empresa in empresas %}
+                        <option value="{{ empresa.nome_empresa }}">{{ empresa.nome_empresa }}</option>
+                    {% endfor %}
+                </datalist>
+
+                    <label for="tecnico">Técnico:</label>
+                    <input type="text" name="tecnico" id="tecnico" list="tecnicos_list" placeholder="Selecione o Técnico" required>
+                    <datalist id="tecnicos_list" required>
+                        {% for tecnico in tecnicos %}
+                            <option value="{{ tecnico.nome_tecnico }}">{{ tecnico.nome_tecnico }}</option>
+                        {% endfor %}
+                    </datalist>
+
+                        <label for="tipo">Tipo:</label>
+                        <input type="text" name="tipo" id="tipo" list="tipos_list" placeholder="Selecione o tipo" required>
+                        <datalist id="tipos_list" required>
+                            {% for tipo in tipos_equipamentos %}
+                                <option value="{{ tipo }}">{{ tipo }}</option>
+                            {% endfor %}
+                        </datalist>
+
+                        
+            </div>
+            <div class="bloco">
+
+                <label for="marca">Marca:</label>
+                <input type="text" name="marca" id="marca" list="marcas_list" placeholder="Selecione a marca" required>
+                <datalist id="marcas_list" required>
+                    {% for marca in marcas_equipamentos %}
+                        <option value="{{ marca }}">{{ marca }}</option>
+                    {% endfor %}
+                </datalist>
+
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" name="modelo" id="modelo" list="modelos_list" placeholder="Selecione o modelo" required>
+                    <datalist id="modelos_list" required>
+                        {% for modelo in modelos_equipamentos %}
+                            <option value="{{ modelo }}">{{ modelo }}</option>
+                        {% endfor %}
+                    </datalist>
+
+                        <label for="">Nº de Série:</label>
+                        <input type="text" name="numero_serie" id="numero_serie" oninput="this.value = this.value.toUpperCase()" placeholder="Digite o Nº de Série" required>
+                
+            </div>
+            <div class="bloco">
+
+                <label for="">Quantidade:</label>
+                <input type="number" name="quantidade" id="quantidade" placeholder="Digite a Quantidade" required>
+
+                    <label for="data_entrega">Data de Entrega:</label>
+                    <input type="date" id="data_entrega" name="data_entrega" required>
+
+                        <label for="">Obs:</label>
+                        <input type="text" name="obs" id="obs" oninput="this.value = this.value.toUpperCase()" placeholder="Digite a Observação">
+                
+            </div>
+        </div>
+        <br>
+        <div class="botao">
+            <input class="Salvar" type="submit" name="action" value="salvar" style="cursor: pointer;" required>
+            <input class="finalizar" type="submit" name="action" value="finalizar" style="cursor: pointer;" formnovalidate>
+            <a href="{% url 'index' %}" >
+                <button type="button" style="cursor: pointer;">Voltar</button>
+            </a>  
+        </div>  
+        <input type="datetime-local" id="data_hora_atual" name="data_hora_atual" value="" style="display: none;" disabled />
+    </div>    
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    //hora e data
+    function formatDateTime(dateTime) {
+        const year = dateTime.getFullYear();
+        const month = String(dateTime.getMonth() + 1).padStart(2, '0');
+        const day = String(dateTime.getDate()).padStart(2, '0');
+        const hours = String(dateTime.getHours()).padStart(2, '0');
+        const minutes = String(dateTime.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    function updateDateTime() {
+        const dataHoraAtualInput = document.getElementById('data_hora_atual');
+        const dataHoraAtual = new Date();
+        dataHoraAtualInput.value = formatDateTime(dataHoraAtual);
+    }
+
+    updateDateTime();
+
+    setInterval(updateDateTime, 1000);
+
+    //------------------------------------------------
+
+    //cupom
+    $(document).ready(function() {
+        $('#cupom').on('blur', function() {
+            var cupom = $(this).val();
+            var verificarCupomUrl = '{% url 'verificar_cupom_entrega' %}';
+    
+            $.get(verificarCupomUrl, {cupom: cupom}, function(data) {
+                if (data.cupom_exists) {
+                    // Exibir um pop-up usando SweetAlert2
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Cupom já existe',
+                        text: 'Este número de cupom já está em uso.',
+                        confirmButtonText: 'Ok'
+                    }).then(function() {
+                        // Limpar o valor do input e escondê-lo
+                        $('#cupom').val('');
+                    });
+                }
+            });
+        });
+    });
+
+    //-----------------------------------------------------------
+
+    //data automático
+    const dataSaidaInput = document.getElementById("data_entrega");
+    const dataAtual = new Date();
+    const ano = dataAtual.getFullYear();
+    const mes = String(dataAtual.getMonth() + 1).padStart(2, "0");
+    const dia = String(dataAtual.getDate()).padStart(2, "0");
+    const dataFormatada = `${ano}-${mes}-${dia}`;
+    dataSaidaInput.value = dataFormatada;
+
+    //-----------------------------------------------------------
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtenha o elemento de entrada de cupom e a URL da view
+        var cupomInput = document.getElementById('cupom');
+        var verificarCupomURL = document.getElementById('verificar_cupom_url').value;
+    
+        // Defina um valor de cupom padrão ou recupere-o do campo de entrada de cupom
+        var cupomValue = cupomInput.value || 1; // Use 1 como valor padrão
+    
+        // Faça uma solicitação AJAX para a view verificar_cupom_saida com o valor de cupom
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', verificarCupomURL + '?cupom=' + cupomValue, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.proximo_cupom) {
+                    // Preencha o campo de cupom com o próximo número de cupom obtido
+                    cupomInput.value = response.proximo_cupom;
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
+
+
+{% endblock %}

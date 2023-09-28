@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alterar Senha</title>
+</head>
+<body>
+    <h1>Alterar Senha</h1>
+    <form method="post" action="{% url 'senha' %}">
+        {% csrf_token %}
+        <label for="nova_senha">Nova Senha:</label>
+        <input type="password" name="nova_senha" required>
+        <button type="submit">Alterar Senha</button>
+    </form>
+</body>
+</html>
